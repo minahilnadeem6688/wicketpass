@@ -9,7 +9,7 @@ Your MetaMask wallet is your identity: there is no login screen.
 
 **[Live site](https://wicketpass.vercel.app)** · **[Contracts on WireScan](docs/deployments.md)**
 
-<img src="docs/screenshots/01-portal.webp" width="860" alt="WicketPass fan portal" />
+<img src="docs/screenshots/01-home.webp" width="880" alt="WicketPass home page: Every seat, verified, with a stack of match tickets" />
 
 </div>
 
@@ -45,21 +45,38 @@ FanPassport when a fan attends or resells. Addresses and transaction hashes are 
 
 ## Screens
 
-| Fan Passport | Resale marketplace |
+| Tickets | Fan Passport |
 | --- | --- |
-| <img src="docs/screenshots/03-passport.webp" alt="Fan Passport" /> | <img src="docs/screenshots/04-marketplace.webp" alt="Marketplace" /> |
-| **Gate scanner** | **League admin** |
-| <img src="docs/screenshots/07-gate-scanner.webp" alt="Gate scanner" /> | <img src="docs/screenshots/08-admin-dashboard.webp" alt="Admin dashboard" /> |
+| <img src="docs/screenshots/04-tickets.webp" alt="Fixtures shown as match tickets" /> | <img src="docs/screenshots/05-passport.webp" alt="Fan Passport with score ring and tier ladder" /> |
+| **Resale** | **Gate scanner** |
+| <img src="docs/screenshots/06-marketplace.webp" alt="Resale marketplace with a price cap on every ticket" /> | <img src="docs/screenshots/09-gate-scanner.webp" alt="Gate scanner turning away an invalid ticket" /> |
+| **League admin** | **Admin tools** |
+| <img src="docs/screenshots/10-admin-dashboard.webp" alt="Admin dashboard with sales, tiers and on-chain activity" /> | <img src="docs/screenshots/11-admin-tools.webp" alt="Minting tickets, blacklist and sponsor rewards" /> |
 
-Pages: fan portal (`/portal`), Fan Passport (`/passport`), marketplace (`/marketplace`),
-gate verification (`/gate`) and the league admin panel (`/admin`). Admin figures in the screenshots are demo data.
+| Listing a ticket | Buying a resale ticket |
+| --- | --- |
+| <img src="docs/screenshots/07-list-ticket.webp" width="380" alt="List your ticket with the price cap meter" /> | <img src="docs/screenshots/08-confirm-purchase.webp" width="380" alt="Purchase breakdown with the league royalty" /> |
+
+<p align="center"><img src="docs/screenshots/12-phones.webp" width="860" alt="Home, Fan Passport and gate scanner on a phone" /></p>
+
+Pages: home (`/`), tickets (`/portal`), Fan Passport (`/passport`), resale (`/marketplace`),
+gate scanner (`/gate`) and the league admin panel (`/admin`). The passport shows a sample until a wallet
+is connected, and the admin figures are demo data.
+
+## Design
+
+The look is meant to feel like a printed matchday ticket rather than a crypto dashboard: warm paper,
+pitch green, cricket-ball red and a butter yellow, with each franchise's colour on its tickets.
+Headings are set in Bricolage Grotesque with Instrument Serif italics. Tickets are dealt onto the home
+page, a ball rolls down the "how it works" pitch, the gate stamps each result, and everything respects
+`prefers-reduced-motion`. Layouts are built for phones from 360px up.
 
 ## Tech stack
 
 | Layer | Technology |
 | --- | --- |
 | Contracts | Solidity 0.8.28, OpenZeppelin, Hardhat, Mocha and Chai |
-| Front end | React 19, Vite, React Router, Tailwind CSS, ethers.js v6, Recharts, QR codes |
+| Front end | React 19, Vite, React Router, ethers.js v6, qrcode.react, hand-written CSS |
 | Wallet | MetaMask (switches to or adds the WireFluid network automatically) |
 | Network | WireFluid (EVM, chain ID 92533), explorer: WireScan |
 | Hosting | Vercel |
@@ -74,9 +91,10 @@ wicketpass/
 │   ├── test/             TicketNFT test suite
 │   └── deployments/      Deployed addresses
 ├── frontend/             React app
-│   ├── src/pages/        Landing, FanPortal, FanPassport, Marketplace, GateVerification, AdminPanel
+│   ├── src/pages/        Landing, FanPortal (tickets), FanPassport, Marketplace, GateVerification, AdminPanel
 │   ├── src/hooks/        useTicketNFT, useFanPassport, useMarketplace, useWallet
-│   ├── src/components/   Passport, marketplace, gate, admin and wallet components
+│   ├── src/components/   Ticket stub, passport, marketplace, admin, layout and wallet components
+│   ├── src/styles/       The design system (one stylesheet)
 │   └── src/contracts/    ABIs and addresses
 └── docs/                 Deployments and screenshots
 ```
