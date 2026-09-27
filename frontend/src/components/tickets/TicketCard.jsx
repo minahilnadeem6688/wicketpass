@@ -15,7 +15,7 @@ export default function TicketCard({ ticket }) {
           <div className="fp-qr">▣</div>
           <div className="fp-ticket-scan">
             Scan at gate<br />
-            <span style={{ color: "rgba(0,193,112,0.7)", fontSize: "10px" }}>
+            <span style={{ color: "rgba(201,164,92,0.7)", fontSize: "10px" }}>
               On WireScan ↗
             </span>
           </div>

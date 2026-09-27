@@ -1,8 +1,8 @@
 const TIERS = [
   { label:"⚪ Rookie",    pct:45, color:"#888"                                    },
   { label:"⭐ Fan",       pct:30, color:"#c0c0c0"                                 },
-  { label:"🏅 Die-Hard",  pct:18, color:"#FFB800"                                 },
-  { label:"🏆 Legend",    pct:7,  color:"linear-gradient(90deg,#FFB800,#B8FF4F)"  },
+  { label:"🏅 Die-Hard",  pct:18, color:"#D9A441"                                 },
+  { label:"🏆 Legend",    pct:7,  color:"linear-gradient(90deg,#D9A441,#E2CC98)"  },
 ]
 
 export default function TierDistributionChart() {

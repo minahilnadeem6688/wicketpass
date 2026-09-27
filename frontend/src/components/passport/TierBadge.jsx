@@ -1,8 +1,8 @@
 const TIERS = {
   Rookie:   { icon:"⚪", color:"#888"    },
   Fan:      { icon:"⭐", color:"#c0c0c0" },
-  "Die-Hard":{ icon:"🏅", color:"#FFB800" },
-  Legend:   { icon:"🏆", color:"#FFB800" },
+  "Die-Hard":{ icon:"🏅", color:"#D9A441" },
+  Legend:   { icon:"🏆", color:"#D9A441" },
 }
 
 export default function TierBadge({ tier }) {

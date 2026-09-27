@@ -6,8 +6,8 @@ import { useWalletContext } from "../context/WalletContext"
 import { useTicketNFT } from "../hooks/useTicketNFT"
 
 const TIER_STYLE = {
-  Legend:     { icon:"🏆", color:"#FFB800" },
-  "Die-Hard": { icon:"🏅", color:"#FFB800" },
+  Legend:     { icon:"🏆", color:"#D9A441" },
+  "Die-Hard": { icon:"🏅", color:"#D9A441" },
   Fan:        { icon:"⭐", color:"#c0c0c0" },
   Rookie:     { icon:"⚪", color:"#888"    },
 }
@@ -73,11 +73,11 @@ export default function GateVerification() {
             <div className="gv-stat-label">Scanned</div>
           </div>
           <div className="gv-stat">
-            <div className="gv-stat-num" style={{color:"#00C170"}}>{stats.valid}</div>
+            <div className="gv-stat-num" style={{color:"#C9A45C"}}>{stats.valid}</div>
             <div className="gv-stat-label">Valid</div>
           </div>
           <div className="gv-stat">
-            <div className="gv-stat-num" style={{color:"#FF4444"}}>{stats.invalid}</div>
+            <div className="gv-stat-num" style={{color:"#C2503F"}}>{stats.invalid}</div>
             <div className="gv-stat-label">Invalid</div>
           </div>
         </div>
@@ -141,7 +141,7 @@ export default function GateVerification() {
                 <div className="gv-logged-dot" />
                 <div className="gv-logged-txt">
                   Attendance logged on WireFluid •{" "}
-                  <a href={result.wirescan} target="_blank" rel="noreferrer" style={{color:"#00C170"}}>
+                  <a href={result.wirescan} target="_blank" rel="noreferrer" style={{color:"#C9A45C"}}>
                     View on WireScan ↗
                   </a>
                 </div>

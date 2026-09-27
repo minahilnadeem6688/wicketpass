@@ -24,8 +24,8 @@ export default function ReputationRing({ score, max }) {
       <svg className="pp-ring-svg" viewBox="0 0 160 160">
         <defs>
           <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#FFB800" />
-            <stop offset="100%" stopColor="#B8FF4F" />
+            <stop offset="0%" stopColor="#D9A441" />
+            <stop offset="100%" stopColor="#E2CC98" />
           </linearGradient>
         </defs>
         <circle className="pp-ring-bg" cx="80" cy="80" r="70" />

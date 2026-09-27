@@ -1,8 +1,8 @@
 const STATS = [
-  { icon:"🎟️", num:"1,247", label:"Total Tickets Sold",  color:"#00C170", change:"+34 today"           },
-  { icon:"💰", num:"PKR 45K", label:"Royalties Earned",   color:"#FFB800", change:"+PKR 2,400 today"    },
-  { icon:"🏪", num:"389",    label:"Total Resales",       color:"#6C3FC7", change:"+12 today"            },
-  { icon:"✅", num:"892",    label:"Gate Scans Today",    color:"#00E5FF", change:"98.2% valid rate"     },
+  { icon:"🎟️", num:"1,247", label:"Total Tickets Sold",  color:"#C9A45C", change:"+34 today"           },
+  { icon:"💰", num:"PKR 45K", label:"Royalties Earned",   color:"#D9A441", change:"+PKR 2,400 today"    },
+  { icon:"🏪", num:"389",    label:"Total Resales",       color:"#6E8B74", change:"+12 today"            },
+  { icon:"✅", num:"892",    label:"Gate Scans Today",    color:"#8FA6AE", change:"98.2% valid rate"     },
 ]
 
 export default function StatsOverview() {

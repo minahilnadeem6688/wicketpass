@@ -13,7 +13,7 @@ export default function Landing() {
     const resize = () => { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight }
     resize()
     window.addEventListener("resize", resize)
-    const colors = ["#00C170", "#B8FF4F", "#6C3FC7", "#00E5FF", "#FFB800"]
+    const colors = ["#C9A45C", "#E2CC98", "#6E8B74", "#8FA6AE", "#D9A441"]
     const particles = Array.from({ length: 55 }, () => ({
       x: Math.random() * canvas.width, y: Math.random() * canvas.height,
       r: Math.random() * 1.8 + 0.4, dx: (Math.random() - 0.5) * 0.35, dy: (Math.random() - 0.5) * 0.35,
@@ -44,10 +44,10 @@ export default function Landing() {
   ]
 
   const steps = [
-    { num:"01", icon:"🔒", color:"#00C170", title:"Connect Wallet",  desc:"Connect your MetaMask wallet. Your wallet is your identity — no signup needed." },
-    { num:"02", icon:"🎟️", color:"#FFB800", title:"Buy NFT Ticket",  desc:"Pick your match and buy. Ticket minted as NFT on WireFluid — impossible to fake." },
-    { num:"03", icon:"🏟️", color:"#6C3FC7", title:"Attend & Scan",   desc:"Show your QR at the gate. Verified instantly on-chain. Attendance logged forever." },
-    { num:"04", icon:"⭐",  color:"#00E5FF", title:"Earn Rewards",    desc:"Every match builds your Fan Passport. Earn tier badges, get priority access and VIP perks." },
+    { num:"01", icon:"🔒", color:"#C9A45C", title:"Connect Wallet",  desc:"Connect your MetaMask wallet. Your wallet is your identity — no signup needed." },
+    { num:"02", icon:"🎟️", color:"#D9A441", title:"Buy NFT Ticket",  desc:"Pick your match and buy. Ticket minted as NFT on WireFluid — impossible to fake." },
+    { num:"03", icon:"🏟️", color:"#6E8B74", title:"Attend & Scan",   desc:"Show your QR at the gate. Verified instantly on-chain. Attendance logged forever." },
+    { num:"04", icon:"⭐",  color:"#8FA6AE", title:"Earn Rewards",    desc:"Every match builds your Fan Passport. Earn tier badges, get priority access and VIP perks." },
   ]
 
   const features = [

@@ -1,6 +1,6 @@
 const TIER_STYLES = {
-  Legend:   { icon:"🏆", color:"#FFB800" },
-  "Die-Hard":{ icon:"🏅", color:"#FFB800" },
+  Legend:   { icon:"🏆", color:"#D9A441" },
+  "Die-Hard":{ icon:"🏅", color:"#D9A441" },
   Fan:      { icon:"⭐", color:"#c0c0c0"  },
   Rookie:   { icon:"⚪", color:"#888"     },
 }

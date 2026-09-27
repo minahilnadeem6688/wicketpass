@@ -10,8 +10,8 @@ import { useFanPassport } from "../hooks/useFanPassport"
 const TIERS = [
   { icon:"⚪", name:"Rookie",   req:"0 matches",    color:"#888"    },
   { icon:"⭐", name:"Fan",      req:"3+ matches",   color:"#c0c0c0" },
-  { icon:"🏅", name:"Die-Hard", req:"10+ matches",  color:"#FFB800" },
-  { icon:"🏆", name:"Legend",   req:"Multi-season", color:"#FFB800", current:true },
+  { icon:"🏅", name:"Die-Hard", req:"10+ matches",  color:"#D9A441" },
+  { icon:"🏆", name:"Legend",   req:"Multi-season", color:"#D9A441", current:true },
 ]
 
 export default function FanPassport() {
@@ -60,20 +60,20 @@ export default function FanPassport() {
 
       <div className="pp-body">
         {!wallet ? (
-          <div style={{textAlign:"center",padding:"60px",color:"rgba(240,244,255,0.4)"}}>
+          <div style={{textAlign:"center",padding:"60px",color:"rgba(236,229,211,0.4)"}}>
             Connect your wallet to view your Fan Passport
           </div>
         ) : loading ? (
-          <div style={{textAlign:"center",padding:"60px",color:"#00C170"}}>
+          <div style={{textAlign:"center",padding:"60px",color:"#C9A45C"}}>
             Loading passport from WireFluid...
           </div>
         ) : !passport ? (
           <div style={{textAlign:"center",padding:"60px"}}>
             <div style={{fontSize:"40px",marginBottom:"16px"}}>🏏</div>
-            <div style={{fontSize:"18px",fontFamily:"Space Grotesk",fontWeight:"700",marginBottom:"8px"}}>
+            <div style={{fontSize:"18px",fontFamily:"Inter Tight",fontWeight:"700",marginBottom:"8px"}}>
               No Passport Found
             </div>
-            <div style={{fontSize:"14px",color:"rgba(240,244,255,0.4)",marginBottom:"24px"}}>
+            <div style={{fontSize:"14px",color:"rgba(236,229,211,0.4)",marginBottom:"24px"}}>
               Create your Fan Passport to start earning loyalty points
             </div>
             <button className="fp-buy-btn" style={{maxWidth:"240px",margin:"0 auto"}} onClick={handleCreatePassport}>
@@ -132,7 +132,7 @@ export default function FanPassport() {
                 <div className="pp-section-title">📅 Attendance Timeline</div>
                 <div className="pp-timeline">
                   {history.length === 0 ? (
-                    <div style={{color:"rgba(240,244,255,0.3)",fontSize:"13px"}}>
+                    <div style={{color:"rgba(236,229,211,0.3)",fontSize:"13px"}}>
                       No matches attended yet. Buy a ticket and attend!
                     </div>
                   ) : history.map((h, i) => (

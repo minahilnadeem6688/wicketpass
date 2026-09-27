@@ -19,7 +19,7 @@ export default function RewardsInbox({ rewards = [], onClaim, signer, provider }
 
   if (!rewards || rewards.length === 0) {
     return (
-      <div style={{color:"rgba(240,244,255,0.3)",fontSize:"13px"}}>
+      <div style={{color:"rgba(236,229,211,0.3)",fontSize:"13px"}}>
         No rewards yet. Attend matches to earn rewards!
       </div>
     )
@@ -38,7 +38,7 @@ export default function RewardsInbox({ rewards = [], onClaim, signer, provider }
             className="pp-reward-claim"
             onClick={() => handleClaim(r.index)}
             disabled={r.claimed || claiming === r.index}
-            style={r.claimed ? { color:"#B8FF4F", borderColor:"rgba(184,255,79,0.3)" } : {}}
+            style={r.claimed ? { color:"#E2CC98", borderColor:"rgba(226,204,152,0.3)" } : {}}
           >
             {claiming === r.index ? "..." : r.claimed ? "Claimed ✓" : "Claim"}
           </button>

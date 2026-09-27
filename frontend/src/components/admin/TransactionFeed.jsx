@@ -13,7 +13,7 @@ export default function TransactionFeed() {
     <div className="ap-card">
       <div className="ap-card-title">
         Live Transaction Feed
-        <span style={{ fontSize:"10px", color:"#00C170" }}>● LIVE</span>
+        <span style={{ fontSize:"10px", color:"#C9A45C" }}>● LIVE</span>
       </div>
       <div className="ap-feed">
         {FEED.map((f, i) => (

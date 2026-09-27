@@ -18,8 +18,8 @@ const STATS = [
 const TIERS = [
   { icon:"⚪", name:"Rookie",   req:"0 matches",    color:"#888"    },
   { icon:"⭐", name:"Fan",      req:"3+ matches",   color:"#c0c0c0" },
-  { icon:"🏅", name:"Die-Hard", req:"10+ matches",  color:"#FFB800" },
-  { icon:"🏆", name:"Legend",   req:"Multi-season", color:"#FFB800", current:true },
+  { icon:"🏅", name:"Die-Hard", req:"10+ matches",  color:"#D9A441" },
+  { icon:"🏆", name:"Legend",   req:"Multi-season", color:"#D9A441", current:true },
 ]
 
 export default function FanPassport() {
