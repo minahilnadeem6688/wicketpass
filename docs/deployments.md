@@ -1,4 +1,6 @@
-# WicketPass — Transaction Hashes
+# WicketPass: deployments on WireFluid (chain 92533)
+
+Every contract and setup transaction can be checked on [WireScan](https://wirefluidscan.com).
 
 ## Contract Deployments
 - TicketNFT deployed:    0xA5E57BaC505Cc5c41bf2e0FaE56dd65Fc5aD23eC
