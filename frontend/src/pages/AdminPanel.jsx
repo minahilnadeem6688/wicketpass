@@ -80,7 +80,7 @@ export default function AdminPanel() {
             <button className="ap-mint-btn" onClick={handleMint} disabled={minting}>
               {minting ? "Minting on WireFluid..." : "Mint Tickets on WireFluid Network"}
             </button>
-            {mintDone && <div className="ap-success-msg">✅ Tickets minted! Transaction confirmed on WireScan.</div>}
+            {mintDone && <div className="ap-success-msg">Tickets minted! Transaction confirmed on WireScan.</div>}
           </div>
         </div>
 

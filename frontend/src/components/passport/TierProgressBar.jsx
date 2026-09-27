@@ -4,7 +4,7 @@ export default function TierProgressBar({ current, max }) {
     <div className="pp-progress-wrap">
       <div className="pp-progress-label">
         <span>Progress to Max</span>
-        <span style={{ color:"#D9A441" }}>{current} / {max}</span>
+        <span style={{ color:"#F2C14E" }}>{current} / {max}</span>
       </div>
       <div className="pp-progress-bar">
         <div className="pp-progress-fill" style={{ width:`${pct}%` }} />

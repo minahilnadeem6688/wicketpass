@@ -1,8 +1,9 @@
+import Icon from "../shared/Icon"
 const TIERS = [
-  { label:"⚪ Rookie",    pct:45, color:"#888"                                    },
-  { label:"⭐ Fan",       pct:30, color:"#c0c0c0"                                 },
-  { label:"🏅 Die-Hard",  pct:18, color:"#D9A441"                                 },
-  { label:"🏆 Legend",    pct:7,  color:"linear-gradient(90deg,#D9A441,#E2CC98)"  },
+  { icon:"rookie", label:"Rookie",    pct:45, color:"#888"                                    },
+  { icon:"star", label:"Fan",       pct:30, color:"#C9D3CD"                                 },
+  { icon:"medal", label:"Die-Hard",  pct:18, color:"#F2C14E"                                 },
+  { icon:"trophy", label:"Legend",    pct:7,  color:"linear-gradient(90deg,#F2C14E,#F6D67A)"  },
 ]
 
 export default function TierDistributionChart() {
@@ -12,7 +13,7 @@ export default function TierDistributionChart() {
       <div className="ap-tier-bars">
         {TIERS.map((t) => (
           <div className="ap-tier-row" key={t.label}>
-            <div className="ap-tier-label">{t.label}</div>
+            <div className="ap-tier-label"><Icon name={t.icon} size={14} /> {t.label}</div>
             <div className="ap-tier-bar-wrap">
               <div
                 className="ap-tier-bar-fill"

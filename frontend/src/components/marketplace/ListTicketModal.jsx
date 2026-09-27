@@ -46,7 +46,7 @@ export default function ListTicketModal({ onClose }) {
 
         {overCap && (
           <div className="mk-cap-warning">
-            ⚠️ Price exceeds the smart contract cap. Maximum: PKR {CAP.toLocaleString()}. Will be auto-capped.
+            Price exceeds the smart contract cap. Maximum: PKR {CAP.toLocaleString()}. Will be auto-capped.
           </div>
         )}
 
@@ -69,7 +69,7 @@ export default function ListTicketModal({ onClose }) {
             <button className="mk-list-cancel" onClick={onClose}>Cancel</button>
           </>
         ) : (
-          <div className="mk-success show">✅ Listed! Transaction confirmed on WireScan.</div>
+          <div className="mk-success show">Listed! Transaction confirmed on WireScan.</div>
         )}
       </div>
     </div>

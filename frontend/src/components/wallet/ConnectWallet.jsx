@@ -22,7 +22,7 @@ export default function ConnectWallet({ onConnected, primary }) {
         ? "Connecting..."
         : wallet
         ? shortAddress(wallet)
-        : "🦊 Connect Wallet"}
+        : "Connect Wallet"}
     </button>
   )
 }

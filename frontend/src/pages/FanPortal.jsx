@@ -6,12 +6,13 @@ import TierProgressBar from "../components/passport/TierProgressBar"
 import RewardsInbox from "../components/passport/RewardsInbox"
 import { useWalletContext } from "../context/WalletContext"
 import { useFanPassport } from "../hooks/useFanPassport"
+import Icon from "../components/shared/Icon"
 
 const TIERS = [
-  { icon:"⚪", name:"Rookie",   req:"0 matches",    color:"#888"    },
-  { icon:"⭐", name:"Fan",      req:"3+ matches",   color:"#c0c0c0" },
-  { icon:"🏅", name:"Die-Hard", req:"10+ matches",  color:"#D9A441" },
-  { icon:"🏆", name:"Legend",   req:"Multi-season", color:"#D9A441", current:true },
+  { icon:"rookie", name:"Rookie",   req:"0 matches",    color:"#888"    },
+  { icon:"star", name:"Fan",      req:"3+ matches",   color:"#C9D3CD" },
+  { icon:"medal", name:"Die-Hard", req:"10+ matches",  color:"#F2C14E" },
+  { icon:"trophy", name:"Legend",   req:"Multi-season", color:"#F2C14E", current:true },
 ]
 
 export default function FanPassport() {
@@ -43,7 +44,7 @@ export default function FanPassport() {
   async function handleCreatePassport() {
     const result = await createPassport()
     if (result.success) {
-      alert("✅ Passport created!\nTx: " + result.txHash)
+      alert("Passport created!\nTx: " + result.txHash)
       await loadData()
     }
   }
@@ -60,20 +61,20 @@ export default function FanPassport() {
 
       <div className="pp-body">
         {!wallet ? (
-          <div style={{textAlign:"center",padding:"60px",color:"rgba(236,229,211,0.4)"}}>
+          <div style={{textAlign:"center",padding:"60px",color:"rgba(245,241,228,0.4)"}}>
             Connect your wallet to view your Fan Passport
           </div>
         ) : loading ? (
-          <div style={{textAlign:"center",padding:"60px",color:"#C9A45C"}}>
+          <div style={{textAlign:"center",padding:"60px",color:"#E8B530"}}>
             Loading passport from WireFluid...
           </div>
         ) : !passport ? (
           <div style={{textAlign:"center",padding:"60px"}}>
-            <div style={{fontSize:"40px",marginBottom:"16px"}}>🏏</div>
-            <div style={{fontSize:"18px",fontFamily:"Inter Tight",fontWeight:"700",marginBottom:"8px"}}>
+            <div style={{fontSize:"40px",marginBottom:"16px"}}><Icon name="bat" size={20} /></div>
+            <div style={{fontSize:"18px",fontFamily:"Barlow Condensed",fontWeight:"700",marginBottom:"8px"}}>
               No Passport Found
             </div>
-            <div style={{fontSize:"14px",color:"rgba(236,229,211,0.4)",marginBottom:"24px"}}>
+            <div style={{fontSize:"14px",color:"rgba(245,241,228,0.4)",marginBottom:"24px"}}>
               Create your Fan Passport to start earning loyalty points
             </div>
             <button className="fp-buy-btn" style={{maxWidth:"240px",margin:"0 auto"}} onClick={handleCreatePassport}>
@@ -97,15 +98,15 @@ export default function FanPassport() {
 
               <div className="pp-stats-grid">
                 {[
-                  { icon:"🏟️", num:passport.matchesAttended, label:"Matches Attended", color:"green"  },
-                  { icon:"⭐",  num:score,                    label:"Reputation Score",  color:"gold"   },
-                  { icon:"✅",  num:`${passport.trustScore}%`,label:"Trust Score",       color:"green"  },
-                  { icon:"🎁",  num:rewards.filter(r=>!r.claimed).length, label:"Pending Rewards", color:"purple" },
-                  { icon:"🎟️", num:history.length,           label:"Matches on Chain",  color:"cyan"   },
-                  { icon:"🏪",  num:passport.cleanResales,   label:"Clean Resales",     color:"gold"   },
+                  { icon:"stadium", num:passport.matchesAttended, label:"Matches Attended", color:"green"  },
+                  { icon:"star",  num:score,                    label:"Reputation Score",  color:"gold"   },
+                  { icon:"check",  num:`${passport.trustScore}%`,label:"Trust Score",       color:"green"  },
+                  { icon:"gift",  num:rewards.filter(r=>!r.claimed).length, label:"Pending Rewards", color:"purple" },
+                  { icon:"ticket", num:history.length,           label:"Matches on Chain",  color:"cyan"   },
+                  { icon:"resale",  num:passport.cleanResales,   label:"Clean Resales",     color:"gold"   },
                 ].map((s) => (
                   <div className={`pp-stat-card ${s.color}`} key={s.label}>
-                    <span className="pp-stat-icon">{s.icon}</span>
+                    <span className="pp-stat-icon"><Icon name={s.icon} /></span>
                     <div className="pp-stat-num">{s.num}</div>
                     <div className="pp-stat-label">{s.label}</div>
                   </div>
@@ -119,7 +120,7 @@ export default function FanPassport() {
                   key={t.name}
                   className={`pp-tier-card ${passport.tier === t.name ? "current" : ""}`}
                 >
-                  <span className="pp-tier-card-icon">{t.icon}</span>
+                  <span className="pp-tier-card-icon"><Icon name={t.icon} /></span>
                   <div className="pp-tier-card-name" style={{ color: t.color }}>{t.name}</div>
                   <div className="pp-tier-card-req">{t.req}</div>
                   {passport.tier === t.name && <div className="pp-current-tag">Your Tier</div>}
@@ -129,10 +130,10 @@ export default function FanPassport() {
 
             <div className="pp-bottom">
               <div className="pp-section">
-                <div className="pp-section-title">📅 Attendance Timeline</div>
+                <div className="pp-section-title">Attendance Timeline</div>
                 <div className="pp-timeline">
                   {history.length === 0 ? (
-                    <div style={{color:"rgba(236,229,211,0.3)",fontSize:"13px"}}>
+                    <div style={{color:"rgba(245,241,228,0.3)",fontSize:"13px"}}>
                       No matches attended yet. Buy a ticket and attend!
                     </div>
                   ) : history.map((h, i) => (
@@ -149,7 +150,7 @@ export default function FanPassport() {
               </div>
 
               <div className="pp-section">
-                <div className="pp-section-title">🎁 Rewards Inbox</div>
+                <div className="pp-section-title">Rewards Inbox</div>
                 <RewardsInbox rewards={rewards} onClaim={loadData} signer={signer} provider={provider} />
               </div>
             </div>

@@ -1,8 +1,9 @@
+import Icon from "../shared/Icon"
 const TIER_STYLES = {
-  Legend:   { icon:"🏆", color:"#D9A441" },
-  "Die-Hard":{ icon:"🏅", color:"#D9A441" },
-  Fan:      { icon:"⭐", color:"#c0c0c0"  },
-  Rookie:   { icon:"⚪", color:"#888"     },
+  Legend:   { icon:"trophy", color:"#F2C14E" },
+  "Die-Hard":{ icon:"medal", color:"#F2C14E" },
+  Fan:      { icon:"star", color:"#C9D3CD"  },
+  Rookie:   { icon:"rookie", color:"#888"     },
 }
 
 export default function ResaleCard({ item, onBuy }) {
@@ -17,15 +18,15 @@ export default function ResaleCard({ item, onBuy }) {
           <div className="mk-nft-badge">NFT {item.nft}</div>
         </div>
         <div className="mk-card-meta">
-          <div className="mk-meta-row">📅 {item.date}</div>
-          <div className="mk-meta-row">📍 {item.venue}</div>
-          <div className="mk-meta-row">🎟️ Seat {item.seat} • Stand {item.stand}</div>
+          <div className="mk-meta-row"><Icon name="calendar" size={14} /> {item.date}</div>
+          <div className="mk-meta-row"><Icon name="pin" size={14} /> {item.venue}</div>
+          <div className="mk-meta-row"><Icon name="ticket" size={14} /> Seat {item.seat} • Stand {item.stand}</div>
         </div>
         <div className="mk-seller-row">
           <div className="mk-seller-info">
             <div className="mk-seller-label">Seller</div>
             <div className="mk-seller-tier" style={{ color: tier.color }}>
-              {tier.icon} {item.tier} Fan
+              <Icon name={tier.icon} /> {item.tier} Fan
             </div>
           </div>
           <div className="mk-trust">
@@ -41,7 +42,7 @@ export default function ResaleCard({ item, onBuy }) {
         </div>
         <div className="mk-card-btns">
           <button className="mk-buy-btn" onClick={onBuy}>Buy Now</button>
-          <button className="mk-scan-btn">WireScan ↗</button>
+          <button className="mk-scan-btn">WireScan</button>
         </div>
       </div>
     </div>

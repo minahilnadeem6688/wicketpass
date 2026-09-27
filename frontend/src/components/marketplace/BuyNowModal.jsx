@@ -1,4 +1,5 @@
 import { useState } from "react"
+import Icon from "../shared/Icon"
 
 export default function BuyNowModal({ item, onClose }) {
   const [loading, setLoading] = useState(false)
@@ -13,10 +14,9 @@ export default function BuyNowModal({ item, onClose }) {
     <div className="mk-modal-overlay">
       <div className="mk-modal">
 
-        {/* ✅ ADD THIS LINE ONLY */}
         <button className="mk-modal-close" onClick={onClose}>×</button>
 
-        <div className="mk-modal-icon">🎟️</div>
+        <div className="mk-modal-icon"><Icon name="ticket" size={28} /></div>
         <div className="mk-modal-title">{item.match}</div>
         <div className="mk-modal-sub">{item.date} • {item.venue}</div>
         <div className="mk-modal-price">PKR {item.price.toLocaleString()}</div>
@@ -32,7 +32,7 @@ export default function BuyNowModal({ item, onClose }) {
             <button className="mk-modal-cancel" onClick={onClose}>Cancel</button>
           </div>
         ) : (
-          <div className="mk-success show">✅ NFT transferred to your wallet! Tx on WireScan.</div>
+          <div className="mk-success show">NFT transferred to your wallet! Tx on WireScan.</div>
         )}
       </div>
     </div>

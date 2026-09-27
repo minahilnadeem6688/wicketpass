@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import { useEffect, useRef } from "react"
 import ConnectWallet from "../components/wallet/ConnectWallet"
+import Icon from "../components/shared/Icon"
 
 export default function Landing() {
   const navigate = useNavigate()
@@ -13,7 +14,7 @@ export default function Landing() {
     const resize = () => { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight }
     resize()
     window.addEventListener("resize", resize)
-    const colors = ["#C9A45C", "#E2CC98", "#6E8B74", "#8FA6AE", "#D9A441"]
+    const colors = ["#E8B530", "#F6D67A", "#5FBF8A", "#B9DCC8", "#F2C14E"]
     const particles = Array.from({ length: 55 }, () => ({
       x: Math.random() * canvas.width, y: Math.random() * canvas.height,
       r: Math.random() * 1.8 + 0.4, dx: (Math.random() - 0.5) * 0.35, dy: (Math.random() - 0.5) * 0.35,
@@ -37,23 +38,23 @@ export default function Landing() {
   }, [])
 
   const pills = [
-    { icon:"🎟️", label:"NFT Tickets",       cls:"g",  path:"/portal"      },
-    { icon:"⭐",  label:"Fan Passport",       cls:"gd", path:"/passport"    },
-    { icon:"🏪",  label:"Resale Marketplace", cls:"p",  path:"/marketplace" },
-    { icon:"🚩",  label:"Gate Verification",  cls:"c",  path:"/gate"        },
+    { icon:"ticket", label:"NFT Tickets",       cls:"g",  path:"/portal"      },
+    { icon:"star",  label:"Fan Passport",       cls:"gd", path:"/passport"    },
+    { icon:"resale",  label:"Resale Marketplace", cls:"p",  path:"/marketplace" },
+    { icon:"shield",  label:"Gate Verification",  cls:"c",  path:"/gate"        },
   ]
 
   const steps = [
-    { num:"01", icon:"🔒", color:"#C9A45C", title:"Connect Wallet",  desc:"Connect your MetaMask wallet. Your wallet is your identity — no signup needed." },
-    { num:"02", icon:"🎟️", color:"#D9A441", title:"Buy NFT Ticket",  desc:"Pick your match and buy. Ticket minted as NFT on WireFluid — impossible to fake." },
-    { num:"03", icon:"🏟️", color:"#6E8B74", title:"Attend & Scan",   desc:"Show your QR at the gate. Verified instantly on-chain. Attendance logged forever." },
-    { num:"04", icon:"⭐",  color:"#8FA6AE", title:"Earn Rewards",    desc:"Every match builds your Fan Passport. Earn tier badges, get priority access and VIP perks." },
+    { num:"01", icon:"lock", color:"#E8B530", title:"Connect Wallet",  desc:"Connect your MetaMask wallet. Your wallet is your identity — no signup needed." },
+    { num:"02", icon:"ticket", color:"#F2C14E", title:"Buy NFT Ticket",  desc:"Pick your match and buy. Ticket minted as NFT on WireFluid — impossible to fake." },
+    { num:"03", icon:"stadium", color:"#5FBF8A", title:"Attend & Scan",   desc:"Show your QR at the gate. Verified instantly on-chain. Attendance logged forever." },
+    { num:"04", icon:"star",  color:"#B9DCC8", title:"Earn Rewards",    desc:"Every match builds your Fan Passport. Earn tier badges, get priority access and VIP perks." },
   ]
 
   const features = [
-    { icon:"🎟️", title:"Zero Fake Tickets",       tag:"For Fans",      desc:"Every ticket is an NFT on WireFluid blockchain. Cryptographically impossible to duplicate. Show up and always get in." },
-    { icon:"⭐",  title:"Your Loyalty, Rewarded",  tag:"For True Fans", desc:"Every match builds your on-chain Fan Passport. The more loyal you are, the more you unlock — early access, discounts, VIP ballots." },
-    { icon:"🏪",  title:"Safe Resale, Always",     tag:"For Everyone",  desc:"Can't make the match? Resell safely. Smart contract caps the price. No scalpers. No black market." },
+    { icon:"ticket", title:"Zero Fake Tickets",       tag:"For Fans",      desc:"Every ticket is an NFT on WireFluid blockchain. Cryptographically impossible to duplicate. Show up and always get in." },
+    { icon:"star",  title:"Your Loyalty, Rewarded",  tag:"For True Fans", desc:"Every match builds your on-chain Fan Passport. The more loyal you are, the more you unlock — early access, discounts, VIP ballots." },
+    { icon:"resale",  title:"Safe Resale, Always",     tag:"For Everyone",  desc:"Can't make the match? Resell safely. Smart contract caps the price. No scalpers. No black market." },
   ]
 
   const heroLine1 = ["The", "Future", "of"]
@@ -68,7 +69,7 @@ export default function Landing() {
 
       <nav className="lv2-nav">
         <div className="lv2-logo" onClick={() => navigate("/")}>
-          <div className="lv2-logo-icon">🏏</div>
+          <div className="lv2-logo-icon"><Icon name="bat" size={20} /></div>
           <div className="lv2-logo-text">Wicket<span>Pass</span></div>
         </div>
         <ConnectWallet primary onConnected={() => navigate("/portal")} />
@@ -103,14 +104,14 @@ export default function Landing() {
         <div className="lv2-btns lv2-anim-btns">
           <ConnectWallet primary onConnected={() => navigate("/portal")} />
           <button className="lv2-btn-s" onClick={() => document.getElementById("how-it-works").scrollIntoView({ behavior:"smooth" })}>
-            ▶ Watch Demo
+            See how it works
           </button>
         </div>
 
         <div className="lv2-pills lv2-anim-pills">
           {pills.map((p) => (
             <div className="lv2-pill" key={p.label} onClick={() => navigate(p.path)} style={{ cursor:"pointer" }}>
-              <div className={`lv2-pill-icon ${p.cls}`}>{p.icon}</div>
+              <div className={`lv2-pill-icon ${p.cls}`}><Icon name={p.icon} /></div>
               {p.label}
             </div>
           ))}
@@ -125,7 +126,7 @@ export default function Landing() {
             <div className="lv2-step" key={s.num}>
               <div className="lv2-step-num">{s.num}</div>
               <div className="lv2-step-bar" style={{ background:`linear-gradient(90deg,${s.color},transparent)` }} />
-              <span className="lv2-step-icon">{s.icon}</span>
+              <span className="lv2-step-icon"><Icon name={s.icon} /></span>
               <div className="lv2-step-title">{s.title}</div>
               <div className="lv2-step-desc">{s.desc}</div>
             </div>
@@ -137,7 +138,7 @@ export default function Landing() {
         <div className="lv2-feat-grid">
           {features.map((f) => (
             <div className="lv2-feat" key={f.title}>
-              <span className="lv2-feat-icon">{f.icon}</span>
+              <span className="lv2-feat-icon"><Icon name={f.icon} /></span>
               <div className="lv2-feat-title">{f.title}</div>
               <div className="lv2-feat-desc">{f.desc}</div>
               <span className="lv2-feat-tag">{f.tag}</span>

@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import { useWalletContext } from "../../context/WalletContext"
 import { useFanContext } from "../../context/FanContext"
+import Icon from "../shared/Icon"
 
 const LINKS = [
   { label:"Portal",      path:"/portal"      },
@@ -18,16 +19,16 @@ export default function Navbar({ active }) {
   const tier = passport?.tier || null
 
   const TIER_ICONS = {
-    "Rookie":   "⚪",
-    "Fan":      "⭐",
-    "Die-Hard": "🏅",
-    "Legend":   "🏆",
+    "Rookie":   "rookie",
+    "Fan":      "star",
+    "Die-Hard": "medal",
+    "Legend":   "trophy",
   }
 
   return (
     <nav className="fp-nav">
       <div className="fp-logo" onClick={() => navigate("/")}>
-        <div className="fp-logo-icon">🏏</div>
+        <div className="fp-logo-icon"><Icon name="bat" size={20} /></div>
         <div className="fp-logo-txt">Wicket<span>Pass</span></div>
       </div>
 
@@ -46,7 +47,7 @@ export default function Navbar({ active }) {
       <div className="fp-nav-right">
         {tier && (
           <div className="fp-tier-badge">
-            {TIER_ICONS[tier] || "⭐"} {tier}
+            <Icon name={TIER_ICONS[tier] || "star"} size={14} /> {tier}
           </div>
         )}
         {wallet ? (
@@ -58,7 +59,7 @@ export default function Navbar({ active }) {
             onClick={connect}
             disabled={loading}
           >
-            {loading ? "Connecting..." : "🦊 Connect"}
+            {loading ? "Connecting..." : "Connect"}
           </button>
         )}
       </div>

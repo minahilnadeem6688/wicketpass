@@ -1,3 +1,4 @@
+import Icon from "../shared/Icon"
 export default function MatchCard({ match, colorStyle, onBuy }) {
   return (
     <div className={`fp-match-card ${colorStyle.cls}`}>
@@ -10,9 +11,9 @@ export default function MatchCard({ match, colorStyle, onBuy }) {
         <div className="fp-team-name">{match.team2}</div>
       </div>
       <div className="fp-match-meta">
-        <div className="fp-meta-row">📅 {match.date}</div>
-        <div className="fp-meta-row">📍 {match.venue}</div>
-        <div className="fp-meta-row">🎟️ {match.seats} seats available</div>
+        <div className="fp-meta-row"><Icon name="calendar" size={14} /> {match.date}</div>
+        <div className="fp-meta-row"><Icon name="pin" size={14} /> {match.venue}</div>
+        <div className="fp-meta-row"><Icon name="ticket" size={14} /> {match.seats} seats available</div>
       </div>
       <div className="fp-match-price">PKR {match.price.toLocaleString()}</div>
       <button className="fp-buy-btn" onClick={onBuy}>Buy Ticket</button>

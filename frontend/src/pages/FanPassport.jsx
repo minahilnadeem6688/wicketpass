@@ -5,21 +5,22 @@ import TierProgressBar from "../components/passport/TierProgressBar"
 import AttendanceTimeline from "../components/passport/AttendanceTimeline"
 import RewardsInbox from "../components/passport/RewardsInbox"
 import TrustScore from "../components/passport/TrustScore"
+import Icon from "../components/shared/Icon"
 
 const STATS = [
-  { icon:"🏟️", num:"24",  label:"Matches Attended", color:"green"  },
-  { icon:"⭐",  num:"847", label:"Reputation Score",  color:"gold"   },
-  { icon:"✅",  num:"98%", label:"Trust Score",        color:"green"  },
-  { icon:"🎁",  num:"6",   label:"Rewards Earned",    color:"purple" },
-  { icon:"🎟️", num:"3",   label:"Active Tickets",    color:"cyan"   },
-  { icon:"🏪",  num:"2",   label:"Clean Resales",     color:"gold"   },
+  { icon:"stadium", num:"24",  label:"Matches Attended", color:"green"  },
+  { icon:"star",  num:"847", label:"Reputation Score",  color:"gold"   },
+  { icon:"check",  num:"98%", label:"Trust Score",        color:"green"  },
+  { icon:"gift",  num:"6",   label:"Rewards Earned",    color:"purple" },
+  { icon:"ticket", num:"3",   label:"Active Tickets",    color:"cyan"   },
+  { icon:"resale",  num:"2",   label:"Clean Resales",     color:"gold"   },
 ]
 
 const TIERS = [
-  { icon:"⚪", name:"Rookie",   req:"0 matches",    color:"#888"    },
-  { icon:"⭐", name:"Fan",      req:"3+ matches",   color:"#c0c0c0" },
-  { icon:"🏅", name:"Die-Hard", req:"10+ matches",  color:"#D9A441" },
-  { icon:"🏆", name:"Legend",   req:"Multi-season", color:"#D9A441", current:true },
+  { icon:"rookie", name:"Rookie",   req:"0 matches",    color:"#888"    },
+  { icon:"star", name:"Fan",      req:"3+ matches",   color:"#C9D3CD" },
+  { icon:"medal", name:"Die-Hard", req:"10+ matches",  color:"#F2C14E" },
+  { icon:"trophy", name:"Legend",   req:"Multi-season", color:"#F2C14E", current:true },
 ]
 
 export default function FanPassport() {
@@ -45,7 +46,7 @@ export default function FanPassport() {
           <div className="pp-stats-grid">
             {STATS.map((s) => (
               <div className={`pp-stat-card ${s.color}`} key={s.label}>
-                <span className="pp-stat-icon">{s.icon}</span>
+                <span className="pp-stat-icon"><Icon name={s.icon} /></span>
                 <div className="pp-stat-num">{s.num}</div>
                 <div className="pp-stat-label">{s.label}</div>
               </div>
@@ -56,7 +57,7 @@ export default function FanPassport() {
         <div className="pp-tiers-row">
           {TIERS.map((t) => (
             <div className={`pp-tier-card ${t.current ? "current" : ""}`} key={t.name}>
-              <span className="pp-tier-card-icon">{t.icon}</span>
+              <span className="pp-tier-card-icon"><Icon name={t.icon} /></span>
               <div className="pp-tier-card-name" style={{ color: t.color }}>{t.name}</div>
               <div className="pp-tier-card-req">{t.req}</div>
               {t.current && <div className="pp-current-tag">Your Tier</div>}
@@ -66,11 +67,11 @@ export default function FanPassport() {
 
         <div className="pp-bottom">
           <div className="pp-section">
-            <div className="pp-section-title">📅 Attendance Timeline</div>
+            <div className="pp-section-title">Attendance Timeline</div>
             <AttendanceTimeline history={history} />
           </div>
           <div className="pp-section">
-            <div className="pp-section-title">🎁 Rewards Inbox</div>
+            <div className="pp-section-title">Rewards Inbox</div>
             <RewardsInbox />
           </div>
         </div>

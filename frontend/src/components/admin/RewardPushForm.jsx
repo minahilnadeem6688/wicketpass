@@ -37,7 +37,7 @@ export default function RewardPushForm() {
         <button className="ap-airdrop-btn" onClick={airdrop} disabled={loading}>
           {loading ? "Sending to WireFluid..." : "Airdrop Reward to Fans"}
         </button>
-        {done && <div className="ap-success-msg">✅ Reward airdropped! All qualifying fans notified on WireFluid.</div>}
+        {done && <div className="ap-success-msg">Reward airdropped! All qualifying fans notified on WireFluid.</div>}
       </div>
     </div>
   )

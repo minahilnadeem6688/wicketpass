@@ -3,20 +3,21 @@ import Navbar from "../components/layout/Navbar"
 import ResaleCard from "../components/marketplace/ResaleCard"
 import ListTicketModal from "../components/marketplace/ListTicketModal"
 import BuyNowModal from "../components/marketplace/BuyNowModal"
+import Icon from "../components/shared/Icon"
 
 const LISTINGS = [
-  { id:1,  nft:"#042", match:"Karachi vs Lahore",          date:"April 14, 2026", venue:"National Stadium, Karachi",   seat:"B-12", stand:"West",  team:"kk", price:450,  cap:600,  tier:"Legend",    trust:98,  stripColor:"linear-gradient(90deg,#C9A45C,#E2CC98)"  },
-  { id:2,  nft:"#089", match:"Peshawar vs Quetta",         date:"April 15, 2026", venue:"Gaddafi Stadium, Lahore",     seat:"A-05", stand:"North", team:"pz", price:700,  cap:1000, tier:"Die-Hard",   trust:94,  stripColor:"linear-gradient(90deg,#D9A441,#B8743A)"  },
-  { id:3,  nft:"#124", match:"Islamabad vs Multan",        date:"April 16, 2026", venue:"Rawalpindi Stadium",          seat:"C-22", stand:"East",  team:"iu", price:900,  cap:1200, tier:"Fan",        trust:87,  stripColor:"linear-gradient(90deg,#6E8B74,#8FA6AE)"  },
-  { id:4,  nft:"#055", match:"Karachi vs Lahore",          date:"April 14, 2026", venue:"National Stadium, Karachi",   seat:"D-08", stand:"South", team:"kk", price:380,  cap:600,  tier:"Legend",    trust:100, stripColor:"linear-gradient(90deg,#C9A45C,#E2CC98)"  },
-  { id:5,  nft:"#201", match:"Lahore vs Peshawar",         date:"April 17, 2026", venue:"Gaddafi Stadium, Lahore",     seat:"F-14", stand:"VIP",   team:"lq", price:520,  cap:750,  tier:"Die-Hard",   trust:91,  stripColor:"linear-gradient(90deg,#8FA6AE,#6E8B74)"  },
-  { id:6,  nft:"#178", match:"Quetta vs Rawalpindiz",      date:"April 21, 2026", venue:"National Stadium, Karachi",   seat:"B-33", stand:"East",  team:"qu", price:650,  cap:900,  tier:"Fan",        trust:82,  stripColor:"linear-gradient(90deg,#C2503F,#D9A441)"  },
-  { id:7,  nft:"#210", match:"Hyderabad vs Karachi",       date:"April 18, 2026", venue:"National Stadium, Karachi",   seat:"G-11", stand:"West",  team:"hk", price:500,  cap:700,  tier:"Die-Hard",   trust:89,  stripColor:"linear-gradient(90deg,#B8743A,#D9A441)"  },
-  { id:8,  nft:"#233", match:"Rawalpindiz vs Islamabad",   date:"April 19, 2026", venue:"Rawalpindi Cricket Stadium",  seat:"E-07", stand:"North", team:"rp", price:600,  cap:850,  tier:"Legend",    trust:96,  stripColor:"linear-gradient(90deg,#8FA6AE,#6E8B74)"  },
-  { id:9,  nft:"#251", match:"Multan vs Hyderabad",        date:"April 20, 2026", venue:"Multan Cricket Stadium",      seat:"A-15", stand:"South", team:"ms", price:580,  cap:800,  tier:"Fan",        trust:85,  stripColor:"linear-gradient(90deg,#9A8BA0,#D9A441)"  },
-  { id:10, nft:"#267", match:"Peshawar vs Lahore",         date:"April 22, 2026", venue:"Gaddafi Stadium, Lahore",     seat:"C-09", stand:"East",  team:"pz", price:480,  cap:700,  tier:"Legend",    trust:99,  stripColor:"linear-gradient(90deg,#D9A441,#B8743A)"  },
-  { id:11, nft:"#289", match:"Islamabad vs Karachi",       date:"April 23, 2026", venue:"Rawalpindi Cricket Stadium",  seat:"B-20", stand:"West",  team:"iu", price:750,  cap:1000, tier:"Die-Hard",   trust:92,  stripColor:"linear-gradient(90deg,#6E8B74,#8FA6AE)"  },
-  { id:12, nft:"#301", match:"Quetta vs Multan",           date:"April 24, 2026", venue:"National Stadium, Karachi",   seat:"D-14", stand:"North", team:"qu", price:420,  cap:600,  tier:"Fan",        trust:80,  stripColor:"linear-gradient(90deg,#C2503F,#D9A441)"  },
+  { id:1,  nft:"#042", match:"Karachi vs Lahore",          date:"April 14, 2026", venue:"National Stadium, Karachi",   seat:"B-12", stand:"West",  team:"kk", price:450,  cap:600,  tier:"Legend",    trust:98,  stripColor:"linear-gradient(90deg,#E8B530,#F6D67A)"  },
+  { id:2,  nft:"#089", match:"Peshawar vs Quetta",         date:"April 15, 2026", venue:"Gaddafi Stadium, Lahore",     seat:"A-05", stand:"North", team:"pz", price:700,  cap:1000, tier:"Die-Hard",   trust:94,  stripColor:"linear-gradient(90deg,#F2C14E,#EE8A3A)"  },
+  { id:3,  nft:"#124", match:"Islamabad vs Multan",        date:"April 16, 2026", venue:"Rawalpindi Stadium",          seat:"C-22", stand:"East",  team:"iu", price:900,  cap:1200, tier:"Fan",        trust:87,  stripColor:"linear-gradient(90deg,#5FBF8A,#B9DCC8)"  },
+  { id:4,  nft:"#055", match:"Karachi vs Lahore",          date:"April 14, 2026", venue:"National Stadium, Karachi",   seat:"D-08", stand:"South", team:"kk", price:380,  cap:600,  tier:"Legend",    trust:100, stripColor:"linear-gradient(90deg,#E8B530,#F6D67A)"  },
+  { id:5,  nft:"#201", match:"Lahore vs Peshawar",         date:"April 17, 2026", venue:"Gaddafi Stadium, Lahore",     seat:"F-14", stand:"VIP",   team:"lq", price:520,  cap:750,  tier:"Die-Hard",   trust:91,  stripColor:"linear-gradient(90deg,#B9DCC8,#5FBF8A)"  },
+  { id:6,  nft:"#178", match:"Quetta vs Rawalpindiz",      date:"April 21, 2026", venue:"National Stadium, Karachi",   seat:"B-33", stand:"East",  team:"qu", price:650,  cap:900,  tier:"Fan",        trust:82,  stripColor:"linear-gradient(90deg,#E0463F,#F2C14E)"  },
+  { id:7,  nft:"#210", match:"Hyderabad vs Karachi",       date:"April 18, 2026", venue:"National Stadium, Karachi",   seat:"G-11", stand:"West",  team:"hk", price:500,  cap:700,  tier:"Die-Hard",   trust:89,  stripColor:"linear-gradient(90deg,#EE8A3A,#F2C14E)"  },
+  { id:8,  nft:"#233", match:"Rawalpindiz vs Islamabad",   date:"April 19, 2026", venue:"Rawalpindi Cricket Stadium",  seat:"E-07", stand:"North", team:"rp", price:600,  cap:850,  tier:"Legend",    trust:96,  stripColor:"linear-gradient(90deg,#B9DCC8,#5FBF8A)"  },
+  { id:9,  nft:"#251", match:"Multan vs Hyderabad",        date:"April 20, 2026", venue:"Multan Cricket Stadium",      seat:"A-15", stand:"South", team:"ms", price:580,  cap:800,  tier:"Fan",        trust:85,  stripColor:"linear-gradient(90deg,#9A8BA0,#F2C14E)"  },
+  { id:10, nft:"#267", match:"Peshawar vs Lahore",         date:"April 22, 2026", venue:"Gaddafi Stadium, Lahore",     seat:"C-09", stand:"East",  team:"pz", price:480,  cap:700,  tier:"Legend",    trust:99,  stripColor:"linear-gradient(90deg,#F2C14E,#EE8A3A)"  },
+  { id:11, nft:"#289", match:"Islamabad vs Karachi",       date:"April 23, 2026", venue:"Rawalpindi Cricket Stadium",  seat:"B-20", stand:"West",  team:"iu", price:750,  cap:1000, tier:"Die-Hard",   trust:92,  stripColor:"linear-gradient(90deg,#5FBF8A,#B9DCC8)"  },
+  { id:12, nft:"#301", match:"Quetta vs Multan",           date:"April 24, 2026", venue:"National Stadium, Karachi",   seat:"D-14", stand:"North", team:"qu", price:420,  cap:600,  tier:"Fan",        trust:80,  stripColor:"linear-gradient(90deg,#E0463F,#F2C14E)"  },
 ]
 
 const FILTERS = [
@@ -88,7 +89,7 @@ export default function Marketplace() {
 
         {filtered.length === 0 ? (
           <div className="mk-empty-state">
-            <div className="mk-empty-icon">🎟️</div>
+            <div className="mk-empty-icon"><Icon name="ticket" size={28} /></div>
             <div className="mk-empty-txt">No listings for this team right now</div>
           </div>
         ) : (

@@ -4,12 +4,13 @@ import { ethers } from "ethers"
 import Navbar from "../components/layout/Navbar"
 import { useWalletContext } from "../context/WalletContext"
 import { useTicketNFT } from "../hooks/useTicketNFT"
+import Icon from "../components/shared/Icon"
 
 const TIER_STYLE = {
-  Legend:     { icon:"🏆", color:"#D9A441" },
-  "Die-Hard": { icon:"🏅", color:"#D9A441" },
-  Fan:        { icon:"⭐", color:"#c0c0c0" },
-  Rookie:     { icon:"⚪", color:"#888"    },
+  Legend:     { icon:"trophy", color:"#F2C14E" },
+  "Die-Hard": { icon:"medal", color:"#F2C14E" },
+  Fan:        { icon:"star", color:"#C9D3CD" },
+  Rookie:     { icon:"rookie", color:"#888"    },
 }
 
 export default function GateVerification() {
@@ -73,11 +74,11 @@ export default function GateVerification() {
             <div className="gv-stat-label">Scanned</div>
           </div>
           <div className="gv-stat">
-            <div className="gv-stat-num" style={{color:"#C9A45C"}}>{stats.valid}</div>
+            <div className="gv-stat-num" style={{color:"#E8B530"}}>{stats.valid}</div>
             <div className="gv-stat-label">Valid</div>
           </div>
           <div className="gv-stat">
-            <div className="gv-stat-num" style={{color:"#C2503F"}}>{stats.invalid}</div>
+            <div className="gv-stat-num" style={{color:"#E0463F"}}>{stats.invalid}</div>
             <div className="gv-stat-label">Invalid</div>
           </div>
         </div>
@@ -110,7 +111,7 @@ export default function GateVerification() {
 
         {!result && (
           <div className="gv-idle">
-            <div className="gv-idle-icon">🚩</div>
+            <div className="gv-idle-icon"><Icon name="scan" size={36} /></div>
             <div className="gv-idle-txt">Ready to scan — enter a token ID above</div>
           </div>
         )}
@@ -118,7 +119,7 @@ export default function GateVerification() {
         {result?.type === "valid" && (
           <div className="gv-result gv-valid">
             <div className="gv-result-top">
-              <div className="gv-result-icon">✅</div>
+              <div className="gv-result-icon"><Icon name="check" size={36} /></div>
               <div className="gv-result-status">VALID</div>
               <div className="gv-result-sub">Verified on WireFluid Network</div>
             </div>
@@ -141,8 +142,8 @@ export default function GateVerification() {
                 <div className="gv-logged-dot" />
                 <div className="gv-logged-txt">
                   Attendance logged on WireFluid •{" "}
-                  <a href={result.wirescan} target="_blank" rel="noreferrer" style={{color:"#C9A45C"}}>
-                    View on WireScan ↗
+                  <a href={result.wirescan} target="_blank" rel="noreferrer" style={{color:"#E8B530"}}>
+                    View on WireScan
                   </a>
                 </div>
               </div>
@@ -153,7 +154,7 @@ export default function GateVerification() {
         {(result?.type === "invalid" || result?.type === "used") && (
           <div className="gv-result gv-invalid">
             <div className="gv-result-top">
-              <div className="gv-result-icon">❌</div>
+              <div className="gv-result-icon"><Icon name="x" size={36} /></div>
               <div className="gv-result-status">INVALID</div>
               <div className="gv-result-sub">
                 {result.type === "used"

@@ -39,9 +39,9 @@ export default function BlacklistTable() {
                     className="ap-clear-btn"
                     onClick={() => clear(i)}
                     disabled={item.cleared}
-                    style={item.cleared ? { color:"#C9A45C", borderColor:"rgba(201,164,92,0.4)" } : {}}
+                    style={item.cleared ? { color:"#E8B530", borderColor:"rgba(232,181,48,0.4)" } : {}}
                   >
-                    {item.cleared ? "Cleared ✓" : "Clear"}
+                    {item.cleared ? "Cleared" : "Clear"}
                   </button>
                 </td>
               </tr>
