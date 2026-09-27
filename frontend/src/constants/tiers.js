@@ -4,3 +4,5 @@ export const TIERS = {
   DIEHARD: { name: "Die-Hard", minScore: 300, badge: "gold",   color: "#E8B530" },
   LEGEND:  { name: "Legend",   minScore: 700, badge: "legend", color: "#E0463F" },
 }
+
+export const TIER_ICON = { Rookie: "rookie", Fan: "star", "Die-Hard": "medal", Legend: "trophy" }

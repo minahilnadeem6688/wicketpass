@@ -2,49 +2,43 @@ import { useState } from "react"
 import { useFanPassport } from "../../hooks/useFanPassport"
 import Icon from "../shared/Icon"
 
-export default function RewardsInbox({ rewards = [], onClaim, signer, provider }) {
+// Sponsor rewards shown as tear-off coupons
+export default function RewardsInbox({ rewards = [], onClaim, onResult, signer, provider, demo }) {
   const { claimReward } = useFanPassport(signer, provider)
   const [claiming, setClaiming] = useState(null)
 
   async function handleClaim(index) {
     setClaiming(index)
     const result = await claimReward(index)
-    if (result.success) {
-      alert("Reward claimed!\nTx: " + result.txHash)
-      if (onClaim) onClaim()
-    } else {
-      alert("Failed: " + result.error)
-    }
     setClaiming(null)
+    onResult?.(result.success
+      ? { ok: true, msg: "Reward claimed.", link: result.wirescan }
+      : { ok: false, msg: "Couldn't claim that reward. Try again in a moment." })
+    if (result.success) onClaim?.()
   }
 
-  if (!rewards || rewards.length === 0) {
-    return (
-      <div style={{color:"rgba(245,241,228,0.3)",fontSize:"13px"}}>
-        No rewards yet. Attend matches to earn rewards!
-      </div>
-    )
+  if (!rewards.length) {
+    return <p className="empty">No rewards yet. Sponsors drop them to fans after matches.</p>
   }
 
   return (
-    <div className="pp-rewards">
-      {rewards.map((r, i) => (
-        <div className="pp-reward-item" key={i}>
-          <div className="pp-reward-icon gold"><Icon name="gift" /></div>
-          <div className="pp-reward-info">
-            <div className="pp-reward-title">{r.description}</div>
-            <div className="pp-reward-desc">{r.sponsor} • {r.timestamp}</div>
+    <ul className="coupons">
+      {rewards.map((r) => (
+        <li className={`coupon ${r.claimed ? "is-claimed" : ""}`} key={r.index}>
+          <div className="coupon-ic"><Icon name="gift" size={20} /></div>
+          <div className="coupon-body">
+            <p className="coupon-title">{r.description}</p>
+            <p className="coupon-meta">From {r.sponsor} · {r.timestamp}</p>
           </div>
-          <button
-            className="pp-reward-claim"
-            onClick={() => handleClaim(r.index)}
-            disabled={r.claimed || claiming === r.index}
-            style={r.claimed ? { color:"#F6D67A", borderColor:"rgba(246,214,122,0.3)" } : {}}
-          >
-            {claiming === r.index ? "..." : r.claimed ? "Claimed" : "Claim"}
-          </button>
-        </div>
+          {r.claimed ? (
+            <span className="chip chip-soft"><Icon name="check" size={14} stroke={2} /> Claimed</span>
+          ) : (
+            <button className="btn btn-ink btn-sm" disabled={demo || claiming === r.index} onClick={() => handleClaim(r.index)}>
+              {claiming === r.index ? "Claiming…" : "Claim"}
+            </button>
+          )}
+        </li>
       ))}
-    </div>
+    </ul>
   )
 }

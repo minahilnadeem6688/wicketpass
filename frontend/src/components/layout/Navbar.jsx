@@ -1,68 +1,68 @@
-import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { NavLink, useNavigate } from "react-router-dom"
 import { useWalletContext } from "../../context/WalletContext"
 import { useFanContext } from "../../context/FanContext"
+import Logo from "../brand/Logo"
 import Icon from "../shared/Icon"
+import { TIER_ICON } from "../../constants/tiers"
 
 const LINKS = [
-  { label:"Portal",      path:"/portal"      },
-  { label:"Passport",    path:"/passport"    },
-  { label:"Marketplace", path:"/marketplace" },
-  { label:"Gate",        path:"/gate"        },
-  { label:"Admin",       path:"/admin"       },
+  { label:"Tickets",  path:"/portal"      },
+  { label:"Passport", path:"/passport"    },
+  { label:"Resale",   path:"/marketplace" },
+  { label:"Gate",     path:"/gate"        },
+  { label:"Admin",    path:"/admin"       },
 ]
 
-export default function Navbar({ active }) {
+export default function Navbar() {
   const navigate = useNavigate()
   const { wallet, connect, loading, shortAddress } = useWalletContext()
   const { passport } = useFanContext()
-
+  const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const tier = passport?.tier || null
 
-  const TIER_ICONS = {
-    "Rookie":   "rookie",
-    "Fan":      "star",
-    "Die-Hard": "medal",
-    "Legend":   "trophy",
-  }
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    onScroll()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
+
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : ""
+    return () => { document.body.style.overflow = "" }
+  }, [open])
 
   return (
-    <nav className="fp-nav">
-      <div className="fp-logo" onClick={() => navigate("/")}>
-        <div className="fp-logo-icon"><Icon name="bat" size={20} /></div>
-        <div className="fp-logo-txt">Wicket<span>Pass</span></div>
-      </div>
+    <header className={`wp-nav ${scrolled ? "is-scrolled" : ""} ${open ? "is-open" : ""}`}>
+      <div className="wp-nav-inner">
+        <Logo onClick={() => { setOpen(false); navigate("/") }} />
 
-      <div className="fp-navlinks">
-        {LINKS.map((l) => (
-          <div
-            key={l.label}
-            className={`fp-navlink ${active === l.label.toLowerCase() ? "active" : ""}`}
-            onClick={() => navigate(l.path)}
-          >
-            {l.label}
-          </div>
-        ))}
-      </div>
+        <nav className="wp-links" aria-label="Main">
+          {LINKS.map((l) => (
+            <NavLink key={l.path} to={l.path} className={({ isActive }) => `wp-link ${isActive ? "active" : ""}`} onClick={() => setOpen(false)}>
+              {l.label}
+            </NavLink>
+          ))}
+        </nav>
 
-      <div className="fp-nav-right">
-        {tier && (
-          <div className="fp-tier-badge">
-            <Icon name={TIER_ICONS[tier] || "star"} size={14} /> {tier}
-          </div>
-        )}
-        {wallet ? (
-          <div className="fp-wallet">{shortAddress(wallet)}</div>
-        ) : (
-          <button
-            className="fp-buy-btn"
-            style={{padding:"8px 16px",fontSize:"13px",width:"auto"}}
-            onClick={connect}
-            disabled={loading}
-          >
-            {loading ? "Connecting..." : "Connect"}
+        <div className="wp-nav-right">
+          {tier && (
+            <span className="chip chip-tier"><Icon name={TIER_ICON[tier] || "star"} size={14} /> {tier}</span>
+          )}
+          {wallet ? (
+            <span className="chip chip-wallet"><span className="dot-live" /> {shortAddress(wallet)}</span>
+          ) : (
+            <button className="btn btn-ink btn-sm" onClick={connect} disabled={loading}>
+              {loading ? "Connecting…" : "Connect wallet"}
+            </button>
+          )}
+          <button className="wp-burger" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} onClick={() => setOpen(!open)}>
+            <Icon name={open ? "close" : "menu"} size={22} />
           </button>
-        )}
+        </div>
       </div>
-    </nav>
+    </header>
   )
 }

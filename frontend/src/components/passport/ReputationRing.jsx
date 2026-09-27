@@ -1,48 +1,31 @@
 import { useEffect, useRef } from "react"
 
-export default function ReputationRing({ score, max }) {
-  const pct = score / max
-  const circumference = 2 * Math.PI * 70
-  const targetOffset = circumference * (1 - pct)
-  const circleRef = useRef(null)
+// Score ring that fills when it first appears
+export default function ReputationRing({ score, max = 1000, size = 168, label = "Score" }) {
+  const r = 70
+  const c = 2 * Math.PI * r
+  const pct = Math.max(0, Math.min(1, score / max))
+  const ref = useRef(null)
 
   useEffect(() => {
-    const circle = circleRef.current
-    if (!circle) return
-    // Start from full offset (empty ring), then animate to target
-    circle.style.transition = "none"
-    circle.style.strokeDashoffset = circumference
-    // Force reflow so browser registers the start state
-    void circle.getBoundingClientRect()
-    // Now animate to the real value
-    circle.style.transition = "stroke-dashoffset 1.4s cubic-bezier(0.22, 1, 0.36, 1)"
-    circle.style.strokeDashoffset = targetOffset
-  }, [circumference, targetOffset])
+    const el = ref.current
+    if (!el) return
+    el.style.transition = "none"
+    el.style.strokeDashoffset = c
+    void el.getBoundingClientRect()
+    el.style.transition = "stroke-dashoffset 1.6s cubic-bezier(.2,.8,.2,1) .15s"
+    el.style.strokeDashoffset = c * (1 - pct)
+  }, [c, pct])
 
   return (
-    <div className="pp-ring-wrap">
-      <svg className="pp-ring-svg" viewBox="0 0 160 160">
-        <defs>
-          <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#F2C14E" />
-            <stop offset="100%" stopColor="#F6D67A" />
-          </linearGradient>
-        </defs>
-        <circle className="pp-ring-bg" cx="80" cy="80" r="70" />
-        <circle
-          ref={circleRef}
-          className="pp-ring-fill"
-          cx="80" cy="80" r="70"
-          style={{
-            strokeDasharray: circumference,
-            strokeDashoffset: circumference,
-            stroke: "url(#ringGrad)"
-          }}
-        />
+    <div className="ring" style={{ width: size, height: size }}>
+      <svg viewBox="0 0 160 160">
+        <circle className="ring-track" cx="80" cy="80" r={r} />
+        <circle ref={ref} className="ring-fill" cx="80" cy="80" r={r} style={{ strokeDasharray: c, strokeDashoffset: c }} />
       </svg>
-      <div className="pp-ring-center">
-        <div className="pp-ring-num">{score}</div>
-        <div className="pp-ring-label">Score</div>
+      <div className="ring-center">
+        <strong>{score}</strong>
+        <span>{label}</span>
       </div>
     </div>
   )

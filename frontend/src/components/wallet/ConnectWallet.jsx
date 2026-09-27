@@ -1,28 +1,16 @@
 import { useWalletContext } from "../../context/WalletContext"
 
-export default function ConnectWallet({ onConnected, primary }) {
+export default function ConnectWallet({ onConnected, className = "btn btn-ink btn-lg", label = "Connect wallet" }) {
   const { wallet, connect, loading, shortAddress } = useWalletContext()
 
   async function handleClick() {
-    if (!wallet) {
-      await connect()
-      if (onConnected) onConnected()
-    } else {
-      if (onConnected) onConnected()
-    }
+    if (!wallet) await connect()
+    if (onConnected) onConnected()
   }
 
   return (
-    <button
-      onClick={handleClick}
-      className={primary ? "lv2-btn-p" : "fp-wallet"}
-      disabled={loading}
-    >
-      {loading
-        ? "Connecting..."
-        : wallet
-        ? shortAddress(wallet)
-        : "Connect Wallet"}
+    <button onClick={handleClick} className={className} disabled={loading}>
+      {loading ? "Connecting…" : wallet ? `Continue as ${shortAddress(wallet)}` : label}
     </button>
   )
 }

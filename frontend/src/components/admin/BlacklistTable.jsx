@@ -1,54 +1,35 @@
 import { useState } from "react"
 
 const INITIAL = [
-  { wallet:"0xAB12...CD34", reason:"Price Cap Violation", date:"Apr 10" },
-  { wallet:"0xEF56...GH78", reason:"Fake Ticket Attempt", date:"Apr 11" },
-  { wallet:"0xIJ90...KL12", reason:"Bulk Buying",         date:"Apr 12" },
+  { wallet:"0xAB12…CD34", reason:"Listed above the cap",  date:"10 Apr" },
+  { wallet:"0xEF56…A078", reason:"Fake ticket attempt",   date:"11 Apr" },
+  { wallet:"0x1C90…BE12", reason:"Bulk buying",           date:"12 Apr" },
 ]
 
 export default function BlacklistTable() {
   const [list, setList] = useState(INITIAL)
-
-  function clear(i) {
-    setList(list.map((item, idx) =>
-      idx === i ? { ...item, cleared: true } : item
-    ))
-  }
+  const clear = (i) => setList(list.map((item, idx) => (idx === i ? { ...item, cleared: true } : item)))
 
   return (
-    <div className="ap-card">
-      <div className="ap-card-title">Blacklist Management</div>
-      <div className="ap-blacklist-wrap">
-        <table className="ap-table">
-          <thead>
-            <tr>
-              <th>Wallet</th>
-              <th>Reason</th>
-              <th>Date</th>
-              <th>Action</th>
-            </tr>
-          </thead>
+    <article className="panel" data-reveal>
+      <header className="panel-head"><h2>Blacklist</h2><span className="panel-sub">Flagged wallets stop earning points</span></header>
+      <div className="table-wrap">
+        <table className="table">
+          <thead><tr><th>Wallet</th><th>Reason</th><th>Date</th><th /></tr></thead>
           <tbody>
             {list.map((item, i) => (
-              <tr key={i} style={{ opacity: item.cleared ? 0.3 : 1, transition:"opacity 0.4s" }}>
-                <td><div className="ap-wallet-txt">{item.wallet}</div></td>
-                <td><span className="ap-reason-badge">{item.reason}</span></td>
-                <td className="ap-date-txt">{item.date}</td>
-                <td>
-                  <button
-                    className="ap-clear-btn"
-                    onClick={() => clear(i)}
-                    disabled={item.cleared}
-                    style={item.cleared ? { color:"#E8B530", borderColor:"rgba(232,181,48,0.4)" } : {}}
-                  >
-                    {item.cleared ? "Cleared" : "Clear"}
-                  </button>
+              <tr key={i} className={item.cleared ? "is-cleared" : ""}>
+                <td className="mono">{item.wallet}</td>
+                <td><span className="tag">{item.reason}</span></td>
+                <td className="muted">{item.date}</td>
+                <td className="right">
+                  <button className="btn btn-ghost btn-sm" onClick={() => clear(i)} disabled={item.cleared}>{item.cleared ? "Cleared" : "Clear"}</button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-    </div>
+    </article>
   )
 }

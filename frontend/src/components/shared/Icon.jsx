@@ -88,9 +88,30 @@ const PATHS = {
       <circle cx="18.5" cy="18.5" r="2.2" />
     </>
   ),
+  menu: <path d="M4 7.5h16M4 12h16M4 16.5h10" />,
+  close: <path d="M6.5 6.5l11 11M17.5 6.5l-11 11" />,
+  spark: <path d="M12 3.5v17M3.5 12h17M6 6l12 12M18 6L6 18" />,
+  ball: (
+    <>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M8.2 4.4c1.9 2.2 2.9 4.8 2.9 7.6s-1 5.4-2.9 7.6M15.8 4.4c-1.9 2.2-2.9 4.8-2.9 7.6s1 5.4 2.9 7.6" />
+    </>
+  ),
+  clock: (
+    <>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M12 7.5V12l3 2" />
+    </>
+  ),
+  users: (
+    <>
+      <circle cx="9" cy="8.5" r="3.2" />
+      <path d="M3.5 19.5c.6-3 2.8-4.8 5.5-4.8s4.9 1.8 5.5 4.8M15.5 5.6a3.2 3.2 0 0 1 0 6M17.3 14.9c1.7.6 2.8 2.2 3.2 4.6" />
+    </>
+  ),
+  trend: <path d="M3.5 16.5l5.5-5.5 4 4 7.5-7.5M15 7.5h5.5V13" />,
+  github: <path d="M9 19.5c-4 1.2-4-2-5.6-2.4M14.6 21.5v-3.3c0-1 .1-1.6-.5-2.2 2.6-.3 5.4-1.3 5.4-5.9a4.6 4.6 0 0 0-1.3-3.2 4.3 4.3 0 0 0-.1-3.2s-1-.3-3.3 1.2a11.3 11.3 0 0 0-6 0C6.5 3.4 5.5 3.7 5.5 3.7a4.3 4.3 0 0 0-.1 3.2 4.6 4.6 0 0 0-1.3 3.2c0 4.6 2.8 5.6 5.4 5.9-.6.6-.6 1.2-.5 2.2v3.3" />,
 }
-
-export const TIER_ICON = { Rookie: "rookie", Fan: "star", "Die-Hard": "medal", Legend: "trophy" }
 
 export default function Icon({ name, size = 18, stroke = 1.6, className = "", style }) {
   const glyph = PATHS[name]

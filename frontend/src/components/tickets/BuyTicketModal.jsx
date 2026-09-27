@@ -1,70 +1,51 @@
 import { useState } from "react"
-import Icon from "../shared/Icon"
+import Modal from "../shared/Modal"
+import { team } from "../../constants/teams"
+
+const STANDS = ["West", "East", "North", "South", "VIP"]
 
 export default function BuyTicketModal({ match, onClose, onConfirm, loading }) {
   const [seat, setSeat]   = useState("")
   const [stand, setStand] = useState("West")
+  const [err, setErr]     = useState("")
+  const a = team(match.team1), b = team(match.team2)
 
   function confirm() {
-    if (!seat) { alert("Please enter a seat number"); return }
-    onConfirm(seat, stand)
+    if (!seat.trim()) { setErr("Enter your seat number, for example B-12."); return }
+    onConfirm(seat.trim(), stand)
   }
 
   return (
-    <div className="fp-modal-overlay">
-      <div className="fp-modal">
-        <div style={{fontSize:"32px",marginBottom:"12px"}}><Icon name="ticket" size={28} /></div>
-        <h3>{match.team1} vs {match.team2}</h3>
-        <p>{match.date} • {match.venue}</p>
-        <div className="fp-modal-price">
-          {match.price ? `PKR ${Number(match.price).toLocaleString()}` : "PKR ~500"}
-        </div>
+    <Modal kicker="Buy a ticket" title={`${a.city} vs ${b.city}`} onClose={onClose}>
+      <p className="modal-sub">{match.date} · {match.venue}</p>
 
-        <div style={{textAlign:"left",marginBottom:"16px"}}>
-          <div style={{fontSize:"11px",color:"rgba(245,241,228,0.4)",marginBottom:"6px",textTransform:"uppercase"}}>
-            Your Seat Number
-          </div>
-          <input
-            style={{width:"100%",background:"rgba(245,241,228,0.05)",border:"0.5px solid rgba(245,241,228,0.15)",color:"#F5F1E4",borderRadius:"9px",padding:"10px 14px",fontSize:"14px",outline:"none"}}
-            placeholder="e.g. B-12"
-            value={seat}
-            onChange={(e) => setSeat(e.target.value)}
-          />
-        </div>
-
-        <div style={{textAlign:"left",marginBottom:"20px"}}>
-          <div style={{fontSize:"11px",color:"rgba(245,241,228,0.4)",marginBottom:"6px",textTransform:"uppercase"}}>
-            Stand
-          </div>
-          <select
-            style={{width:"100%",background:"#0A3325",border:"0.5px solid rgba(245,241,228,0.15)",color:"#F5F1E4",borderRadius:"9px",padding:"10px 14px",fontSize:"14px",outline:"none"}}
-            value={stand}
-            onChange={(e) => setStand(e.target.value)}
-          >
-            <option>West</option>
-            <option>East</option>
-            <option>North</option>
-            <option>South</option>
-            <option>VIP</option>
-          </select>
-        </div>
-
-        <div style={{fontSize:"12px",color:"rgba(245,241,228,0.3)",marginBottom:"20px"}}>
-          NFT will be minted to your wallet on WireFluid Network.
-          Transaction verifiable on WireScan.
-        </div>
-
-        <div className="fp-modal-btns">
-          <button
-            className="fp-modal-confirm"
-            onClick={confirm}
-            disabled={loading}
-          >
-            {loading ? "Minting on WireFluid..." : "Confirm & Mint NFT"}
-          </button>
-          <button className="fp-modal-cancel" onClick={onClose}>Cancel</button>
+      <div className="field">
+        <label className="field-label">Stand</label>
+        <div className="seg">
+          {STANDS.map((s) => (
+            <button key={s} type="button" className={`seg-btn ${stand === s ? "on" : ""}`} onClick={() => setStand(s)}>{s}</button>
+          ))}
         </div>
       </div>
-    </div>
+
+      <div className="field">
+        <label className="field-label" htmlFor="seat">Seat number</label>
+        <input id="seat" className="input" placeholder="e.g. B-12" value={seat} onChange={(e) => { setSeat(e.target.value); setErr("") }} />
+        {err && <p className="field-err">{err}</p>}
+      </div>
+
+      <div className="modal-total">
+        <span>Total</span>
+        <strong>{match.priceLabel}</strong>
+      </div>
+      <p className="modal-note">The ticket is minted as an NFT to your wallet on the WireFluid network. You'll confirm the payment in MetaMask.</p>
+
+      <div className="modal-btns">
+        <button className="btn btn-ink btn-lg btn-block" onClick={confirm} disabled={loading}>
+          {loading ? "Minting on WireFluid…" : "Confirm and mint"}
+        </button>
+        <button className="btn btn-ghost btn-lg btn-block" onClick={onClose}>Cancel</button>
+      </div>
+    </Modal>
   )
 }

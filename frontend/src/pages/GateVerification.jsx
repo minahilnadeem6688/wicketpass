@@ -1,58 +1,43 @@
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { ethers } from "ethers"
-import Navbar from "../components/layout/Navbar"
+import Page from "../components/layout/Page"
+import Icon from "../components/shared/Icon"
 import { useWalletContext } from "../context/WalletContext"
 import { useTicketNFT } from "../hooks/useTicketNFT"
-import Icon from "../components/shared/Icon"
-
-const TIER_STYLE = {
-  Legend:     { icon:"trophy", color:"#F2C14E" },
-  "Die-Hard": { icon:"medal", color:"#F2C14E" },
-  Fan:        { icon:"star", color:"#C9D3CD" },
-  Rookie:     { icon:"rookie", color:"#888"    },
-}
+import { splitMatch } from "../constants/teams"
 
 export default function GateVerification() {
-  const navigate = useNavigate()
   const { wallet, signer, provider } = useWalletContext()
-  const { verifyTicket, scanTicket, loading } = useTicketNFT(signer, provider)
+  const { verifyTicket, scanTicket } = useTicketNFT(signer, provider)
 
-  const [input, setInput]   = useState("")
-  const [result, setResult] = useState(null)
+  const [input, setInput]       = useState("")
+  const [result, setResult]     = useState(null)
   const [scanning, setScanning] = useState(false)
-  const [stats, setStats]   = useState({ scanned:0, valid:0, invalid:0 })
+  const [stats, setStats]       = useState({ scanned: 0, valid: 0, invalid: 0 })
 
   async function scan() {
     const id = input.trim()
     if (!id) return
-
     setScanning(true)
-    const newStats = { ...stats, scanned: stats.scanned + 1 }
-
+    setResult(null)
+    const next = { ...stats, scanned: stats.scanned + 1 }
     try {
-      const tokenId = parseInt(id.replace("NFT-","").replace("#",""))
+      const tokenId = parseInt(id.replace(/^NFT-?/i, "").replace("#", ""))
       if (isNaN(tokenId)) throw new Error("Invalid ticket ID")
-
-      const verification = await verifyTicket(tokenId)
-
-      if (verification.isValid) {
-        setResult({ type:"valid", tokenId, ...verification })
-        setStats({ ...newStats, valid: newStats.valid + 1 })
-
+      const v = await verifyTicket(tokenId)
+      if (v.isValid) {
+        setResult({ type: "valid", tokenId, ...v })
+        setStats({ ...next, valid: next.valid + 1 })
         if (wallet) {
-          const scanResult = await scanTicket(tokenId)
-          if (scanResult.success) {
-            setResult(prev => ({ ...prev, txHash: scanResult.txHash, wirescan: scanResult.wirescan }))
-          }
+          const s = await scanTicket(tokenId)
+          if (s.success) setResult((prev) => ({ ...prev, txHash: s.txHash, wirescan: s.wirescan }))
         }
       } else {
-        setResult({ type: verification.isUsed ? "used" : "invalid", id })
-        setStats({ ...newStats, invalid: newStats.invalid + 1 })
+        setResult({ type: v.isUsed ? "used" : "invalid", id })
+        setStats({ ...next, invalid: next.invalid + 1 })
       }
-    } catch (err) {
-      setResult({ type:"invalid", id, error: err.message })
-      setStats({ ...newStats, invalid: newStats.invalid + 1 })
+    } catch {
+      setResult({ type: "invalid", id })
+      setStats({ ...next, invalid: next.invalid + 1 })
     } finally {
       setScanning(false)
     }
@@ -60,115 +45,89 @@ export default function GateVerification() {
 
   function reset() { setInput(""); setResult(null) }
 
+  const teams = result?.matchName ? splitMatch(result.matchName) : null
+
   return (
-    <div className="gv">
-      <Navbar active="gate" />
+    <Page>
+      <section className="page-head">
+        <div data-reveal>
+          <p className="eyebrow"><span className="dot-live" /> Gate 4 · Scanner</p>
+          <h1>Scan. <em>Check.</em> Admit.</h1>
+          <p className="page-sub">Enter a ticket number and the contract confirms who owns it and whether it has already been used.</p>
+        </div>
+        <dl className="gate-count" data-reveal style={{ "--d": ".1s" }}>
+          <div><dt>{stats.scanned}</dt><dd>Scanned</dd></div>
+          <div className="ok"><dt>{stats.valid}</dt><dd>Admitted</dd></div>
+          <div className="no"><dt>{stats.invalid}</dt><dd>Turned away</dd></div>
+        </dl>
+      </section>
 
-      <div className="gv-body">
-        <div className="gv-title">Gate Scanner</div>
-        <div className="gv-sub">Scan ticket ID to verify on WireFluid Network</div>
-
-        <div className="gv-stats">
-          <div className="gv-stat">
-            <div className="gv-stat-num">{stats.scanned}</div>
-            <div className="gv-stat-label">Scanned</div>
+      <section className="page-sec gate">
+        <div className="scanner" data-reveal>
+          <div className={`viewfinder ${scanning ? "busy" : ""}`}>
+            <span className="vf-corners" />
+            <span className="vf-line" />
+            <Icon name="scan" size={46} stroke={1.2} />
+            <p>{scanning ? "Checking the chain…" : "Point the camera at a ticket, or type its number"}</p>
           </div>
-          <div className="gv-stat">
-            <div className="gv-stat-num" style={{color:"#E8B530"}}>{stats.valid}</div>
-            <div className="gv-stat-label">Valid</div>
+          <label className="field-label light" htmlFor="tid">Ticket number</label>
+          <div className="scan-row">
+            <input id="tid" className="input input-dark" placeholder="e.g. 1 or NFT-1" value={input}
+              onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && scan()} />
+            <button className="btn btn-butter" onClick={scan} disabled={scanning || !input.trim()}>{scanning ? "Checking…" : "Verify"}</button>
           </div>
-          <div className="gv-stat">
-            <div className="gv-stat-num" style={{color:"#E0463F"}}>{stats.invalid}</div>
-            <div className="gv-stat-label">Invalid</div>
+          <div className="quick">
+            <span>Try a minted ticket</span>
+            {[1, 2, 3, 4, 5].map((n) => (
+              <button key={n} className="quick-btn" onClick={() => setInput(String(n))}>#{n}</button>
+            ))}
           </div>
         </div>
 
-        <div className="gv-scanner-box">
-          <div className="gv-scanner-label">Enter Token ID</div>
-          <div className="gv-input-row">
-            <input
-              className="gv-input"
-              placeholder="e.g. 1 or NFT-1"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && scan()}
-            />
-            <button className="gv-scan-btn" onClick={scan} disabled={scanning}>
-              {scanning ? "Checking..." : "Verify"}
-            </button>
-          </div>
-          <div className="gv-quick">
-            <div className="gv-quick-label">Quick test with your minted tickets:</div>
-            <div className="gv-quick-btns">
-              {[1,2,3,4,5].map(id => (
-                <div key={id} className="gv-quick-btn" onClick={() => setInput(String(id))}>
-                  Token #{id}
-                </div>
-              ))}
+        <div className="verdict" data-reveal style={{ "--d": ".08s" }} aria-live="polite">
+          {!result && (
+            <div className="verdict-idle">
+              <div className="idle-ticket"><span /><span /><span /></div>
+              <h3>Waiting for the next fan</h3>
+              <p>Results show up here with the seat, the match and the owner's wallet.</p>
             </div>
-          </div>
-        </div>
+          )}
 
-        {!result && (
-          <div className="gv-idle">
-            <div className="gv-idle-icon"><Icon name="scan" size={36} /></div>
-            <div className="gv-idle-txt">Ready to scan — enter a token ID above</div>
-          </div>
-        )}
-
-        {result?.type === "valid" && (
-          <div className="gv-result gv-valid">
-            <div className="gv-result-top">
-              <div className="gv-result-icon"><Icon name="check" size={36} /></div>
-              <div className="gv-result-status">VALID</div>
-              <div className="gv-result-sub">Verified on WireFluid Network</div>
+          {result?.type === "valid" && (
+            <div className="verdict-card ok" key={`ok-${result.tokenId}`}>
+              <span className="big-stamp">Admitted</span>
+              <p className="eyebrow">Ticket No. {String(result.tokenId).padStart(3, "0")}</p>
+              <h3>{teams ? `${teams[0].city} vs ${teams[1].city}` : result.matchName}</h3>
+              <dl className="receipt">
+                <div><dt>Stand</dt><dd>{result.stand}</dd></div>
+                <div><dt>Seat</dt><dd>{result.seat}</dd></div>
+                <div><dt>Date</dt><dd>{result.date}</dd></div>
+                <div><dt>Owner</dt><dd className="mono">{result.currentOwner?.slice(0, 6)}…{result.currentOwner?.slice(-4)}</dd></div>
+              </dl>
+              {result.txHash ? (
+                <p className="logged"><Icon name="check" size={15} stroke={2} /> Attendance logged. <a href={result.wirescan} target="_blank" rel="noreferrer">View on WireScan</a></p>
+              ) : !wallet && (
+                <p className="logged muted">Connect the gate wallet to log attendance on-chain.</p>
+              )}
             </div>
-            <div className="gv-fan-details">
-              {[
-                { label:"Token ID",    val:`#${result.tokenId}`,   cls:"green" },
-                { label:"Match",       val:result.matchName,        cls:""      },
-                { label:"Seat",        val:`${result.seat} • Stand ${result.stand}`, cls:"" },
-                { label:"Date",        val:result.date,             cls:""      },
-                { label:"Owner",       val:`${result.currentOwner?.slice(0,6)}...${result.currentOwner?.slice(-4)}`, cls:"green" },
-              ].map(row => (
-                <div className="gv-detail-row" key={row.label}>
-                  <div className="gv-detail-label">{row.label}</div>
-                  <div className={`gv-detail-val ${row.cls}`}>{row.val}</div>
-                </div>
-              ))}
-            </div>
-            {result.txHash && (
-              <div className="gv-logged">
-                <div className="gv-logged-dot" />
-                <div className="gv-logged-txt">
-                  Attendance logged on WireFluid •{" "}
-                  <a href={result.wirescan} target="_blank" rel="noreferrer" style={{color:"#E8B530"}}>
-                    View on WireScan
-                  </a>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
+          )}
 
-        {(result?.type === "invalid" || result?.type === "used") && (
-          <div className="gv-result gv-invalid">
-            <div className="gv-result-top">
-              <div className="gv-result-icon"><Icon name="x" size={36} /></div>
-              <div className="gv-result-status">INVALID</div>
-              <div className="gv-result-sub">
+          {(result?.type === "invalid" || result?.type === "used") && (
+            <div className="verdict-card no" key={`no-${result.id}`}>
+              <span className="big-stamp">Denied</span>
+              <p className="eyebrow">Ticket {result.id}</p>
+              <h3>{result.type === "used" ? "Already used." : "Not a valid ticket."}</h3>
+              <p className="verdict-why">
                 {result.type === "used"
-                  ? "Ticket already used — entry denied"
-                  : "Ticket not found on WireFluid Network"}
-              </div>
+                  ? "This ticket was scanned earlier, so it can't be used to enter again."
+                  : "There's no ticket with this number on the WireFluid network."}
+              </p>
             </div>
-          </div>
-        )}
+          )}
 
-        {result && (
-          <button className="gv-reset-btn" onClick={reset}>Scan Next Ticket</button>
-        )}
-      </div>
-    </div>
+          {result && <button className="btn btn-ghost btn-block" onClick={reset}>Scan the next ticket</button>}
+        </div>
+      </section>
+    </Page>
   )
 }
