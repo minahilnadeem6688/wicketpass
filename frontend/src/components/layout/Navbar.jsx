@@ -45,6 +45,15 @@ export default function Navbar() {
               {l.label}
             </NavLink>
           ))}
+          <div className="wp-sheet-foot">
+            {wallet ? (
+              <span className="chip chip-wallet"><span className="dot-live" /> {shortAddress(wallet)}</span>
+            ) : (
+              <button className="btn btn-ink btn-lg btn-block" onClick={() => { setOpen(false); connect() }} disabled={loading}>
+                {loading ? "Connecting…" : "Connect wallet"}
+              </button>
+            )}
+          </div>
         </nav>
 
         <div className="wp-nav-right">
@@ -54,8 +63,8 @@ export default function Navbar() {
           {wallet ? (
             <span className="chip chip-wallet"><span className="dot-live" /> {shortAddress(wallet)}</span>
           ) : (
-            <button className="btn btn-ink btn-sm" onClick={connect} disabled={loading}>
-              {loading ? "Connecting…" : "Connect wallet"}
+            <button className="btn btn-ink btn-sm wp-nav-connect" onClick={connect} disabled={loading}>
+              {loading ? "Connecting…" : <>Connect<span className="hide-xs">&nbsp;wallet</span></>}
             </button>
           )}
           <button className="wp-burger" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} onClick={() => setOpen(!open)}>

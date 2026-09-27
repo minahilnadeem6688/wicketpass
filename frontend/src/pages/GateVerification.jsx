@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Page from "../components/layout/Page"
 import Icon from "../components/shared/Icon"
 import { useWalletContext } from "../context/WalletContext"
@@ -13,6 +13,15 @@ export default function GateVerification() {
   const [result, setResult]     = useState(null)
   const [scanning, setScanning] = useState(false)
   const [stats, setStats]       = useState({ scanned: 0, valid: 0, invalid: 0 })
+  const verdictRef = useRef(null)
+
+  // On phones the result sits below the scanner, so bring it into view
+  useEffect(() => {
+    const el = verdictRef.current
+    if (!result || !el) return
+    const r = el.getBoundingClientRect()
+    if (r.top > window.innerHeight - 120 || r.top < 70) el.scrollIntoView({ behavior: "smooth", block: "start" })
+  }, [result])
 
   async function scan() {
     const id = input.trim()
@@ -84,7 +93,7 @@ export default function GateVerification() {
           </div>
         </div>
 
-        <div className="verdict" data-reveal style={{ "--d": ".08s" }} aria-live="polite">
+        <div className="verdict" ref={verdictRef} data-reveal style={{ "--d": ".08s", scrollMarginTop: 84 }} aria-live="polite">
           {!result && (
             <div className="verdict-idle">
               <div className="idle-ticket"><span /><span /><span /></div>
